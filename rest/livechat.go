@@ -9,23 +9,46 @@ import (
 	"github.com/ruilisi/Rocket.Chat.Go.SDK/models"
 )
 
+// type AgentInfoResponse struct {
+// Agent models.Agent
+// Status
+// }
+
 type AgentInfoResponse struct {
-	Agent models.Agent
 	Status
+	Agent struct {
+		ID       string `json:"_id"`
+		Name     string `json:"name"`
+		Username string `json:"username"`
+		Status   string `json:"status"`
+	} `json:"agent"`
 }
 
 type AgentDepartmentResponse struct {
-	Departments []models.AgentDepartment
+	Departments []struct {
+		ID           string    `json:"_id"`
+		AgentID      string    `json:"agentId"`
+		DepartmentID string    `json:"departmentId"`
+		UpdatedAt    time.Time `json:"_updatedAt"`
+		Count        int       `json:"count"`
+		Order        int       `json:"order"`
+		Username     string    `json:"username"`
+	} `json:"departments"`
 	Status
 }
 
+// type AgentDepartmentResponse struct {
+// Departments []models.AgentDepartment
+// Status
+// }
+
 type AppearanceResponse struct {
-	Apperance []models.Apperance
+	Appearance []models.Appearance
 	Status
 }
 
 type LiveChatConfigResponse struct {
-	Config models.LiveChatConfig
+	Config models.LiveChatConfig `json:"config"`
 	Status
 }
 
@@ -87,19 +110,40 @@ type LiveChatCustom_FieldResponse struct {
 	Status
 }
 
-type LiveChatDepartmentResponse struct {
-	Departments []models.Department `json:"departments"`
+type LiveChatUpdateDepartmentResponse struct {
+	Department models.Department        `json:"department"`
+	Agents     []models.AgentDepartment `json:"agents"`
 	Status
 }
 
 type LiveChatDepartmentRequest struct {
-	Department models.Department        `json:"departments"`
+	Department models.Department        `json:"department"`
 	Agents     []models.AgentDepartment `json:"agents"`
 }
 
+type LiveChatResgisterDepartmentRequest struct {
+	Department models.Department        `json:"department"`
+	Agents     []models.AgentDepartment `json:"agents,omitempty"`
+}
+
+type LiveChatUpdateDepartmentRequest struct {
+	Department models.Department        `json:"department"`
+	Agents     []models.AgentDepartment `json:"agents,omitempty"`
+}
+
 type LiveChatDepartmentsResponse struct {
-	Department models.Department        `json:"departments"`
-	Agents     []models.AgentDepartment `json:"agents"`
+	Departments []models.Department `json:"departments"`
+	Status
+}
+
+type LiveChatQueryDepartmentResponse struct {
+	Departments models.Department        `json:"department"`
+	Agents      []models.AgentDepartment `json:"agents,omitempty"`
+	Status
+}
+
+type LiveChatRegisterDepartmentResponse struct {
+	Departments []models.Department `json:"departments"`
 	Status
 }
 
@@ -160,7 +204,11 @@ type LiveChatUpdateMessageRequest struct {
 	Token string `json:"token"`
 	Rid   string `json:"rid"`
 	Msg   string `json:"msg"`
-	ID    string `json:"_id"`
+}
+
+type LiveChatDeleteMessageRequest struct {
+	Token string `json:"token"`
+	Rid   string `json:"rid"`
 }
 
 type LiveChatUpdateMessageResponse struct {
@@ -226,6 +274,7 @@ type LiveChatOfficeHourResponse struct {
 }
 
 type LiveChatQueueResponse struct {
+	base
 	Queue []struct {
 		Chats int `json:"chats"`
 		User  struct {
@@ -234,11 +283,10 @@ type LiveChatQueueResponse struct {
 			Status   string `json:"status"`
 		} `json:"user"`
 		Department struct {
-			ID   string `json:"_id"`
-			Name string `json:"name"`
+			ID   interface{} `json:"_id"`
+			Name interface{} `json:"name"`
 		} `json:"department"`
-	} `json:"queues"`
-	base
+	} `json:"queue"`
 }
 
 type LiveChatRoomResponse struct {
@@ -280,15 +328,25 @@ type LiveChatRoomForwardResponse struct {
 }
 
 type LiveChatRoomSurveyRequest struct {
-	Rid   string             `json:"rid"`
-	Token string             `json:"token"`
-	Data  []LiveChatRoomData `json:"data"`
+	Rid   string `json:"rid"`
+	Token string `json:"token"`
+	Data  []Data `json:"data"`
 }
-
-type LiveChatRoomData struct {
+type Data struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 }
+
+// type LiveChatRoomSurveyRequest struct {
+// Rid   string             `json:"rid"`
+// Token string             `json:"token"`
+// Data  []LiveChatRoomData `json:"data"`
+// }
+//
+// type LiveChatRoomData struct {
+// Name  string `json:"name"`
+// Value string `json:"value"`
+// }
 
 type LiveChatRoomSurveyResponse struct {
 	Rid  string `json:"rid"`
@@ -331,7 +389,7 @@ type LiveChatGetUsersResponse struct {
 }
 
 type LiveChatRegisterUserRequset struct {
-	Type     string `json:"type"`
+	// Type     string `json:"type"`
 	Username string `json:"username"`
 }
 
@@ -391,6 +449,9 @@ type LiveChatVisitorRegisterResponse struct {
 	Status
 }
 
+// type PageInfo struct{
+//
+// }
 type LiveChatVisitorNavigationHistoryRequest struct {
 	Token    string `json:"token"`
 	Rid      string `json:"rid"`
@@ -435,9 +496,138 @@ type LiveChatVisitorNavigationHistoryRetrieveResponse struct {
 	Status
 }
 
+// type LiveChatVisitorChatHistoryResponse struct {
+// Histories []models.LiveChatHistory
+// base
+// }
+
 type LiveChatVisitorChatHistoryResponse struct {
-	Histories []models.LiveChatHistory
 	base
+	History []struct {
+		ID         string    `json:"_id"`
+		Msgs       int       `json:"msgs"`
+		UsersCount int       `json:"usersCount"`
+		Lm         time.Time `json:"lm"`
+		Fname      string    `json:"fname"`
+		T          string    `json:"t"`
+		Ts         time.Time `json:"ts"`
+		V          struct {
+			ID       string `json:"_id"`
+			Username string `json:"username"`
+			Token    string `json:"token"`
+			Status   string `json:"status"`
+		} `json:"v,omitempty"`
+		Cl              bool      `json:"cl"`
+		Open            bool      `json:"open,omitempty"`
+		WaitingResponse bool      `json:"waitingResponse,omitempty"`
+		UpdatedAt       time.Time `json:"_updatedAt"`
+		ServedBy        struct {
+			ID       string    `json:"_id"`
+			Username string    `json:"username"`
+			Ts       time.Time `json:"ts"`
+		} `json:"servedBy"`
+		LastMessage struct {
+			ID  string    `json:"_id"`
+			Rid string    `json:"rid"`
+			Msg string    `json:"msg"`
+			Ts  time.Time `json:"ts"`
+			U   struct {
+				ID       string `json:"_id"`
+				Username string `json:"username"`
+				Name     string `json:"name"`
+			} `json:"u"`
+			UpdatedAt time.Time     `json:"_updatedAt"`
+			Mentions  []interface{} `json:"mentions"`
+			Channels  []interface{} `json:"channels"`
+		} `json:"lastMessage,omitempty"`
+		ResponseBy struct {
+			ID            string    `json:"_id"`
+			Username      string    `json:"username"`
+			LastMessageTs time.Time `json:"lastMessageTs"`
+		} `json:"responseBy,omitempty"`
+		Metrics struct {
+			Reaction struct {
+				Fd time.Time `json:"fd"`
+				Ft float64   `json:"ft"`
+				Tt float64   `json:"tt"`
+			} `json:"reaction"`
+			Response struct {
+				Avg   float64   `json:"avg"`
+				Fd    time.Time `json:"fd"`
+				Ft    float64   `json:"ft"`
+				Total int       `json:"total"`
+				Tt    float64   `json:"tt"`
+			} `json:"response"`
+		} `json:"metrics,omitempty"`
+		ClosedAt time.Time `json:"closedAt,omitempty"`
+		ClosedBy struct {
+			ID       string `json:"_id"`
+			Username string `json:"username"`
+		} `json:"closedBy,omitempty"`
+		Closer   string `json:"closer,omitempty"`
+		Metricss struct {
+			ChatDuration        float64 `json:"chatDuration"`
+			ServiceTimeDuration float64 `json:"serviceTimeDuration"`
+			Reaction            struct {
+				Fd time.Time `json:"fd"`
+				Ft float64   `json:"ft"`
+				Tt float64   `json:"tt"`
+			} `json:"reaction"`
+			Response struct {
+				Avg   float64   `json:"avg"`
+				Fd    time.Time `json:"fd"`
+				Ft    float64   `json:"ft"`
+				Total int       `json:"total"`
+				Tt    float64   `json:"tt"`
+			} `json:"response"`
+		} `json:"metrics,omitempty"`
+		Tags         []interface{} `json:"tags,omitempty"`
+		LastMessagee struct {
+			T                   string    `json:"t"`
+			Msg                 string    `json:"msg"`
+			Groupable           bool      `json:"groupable"`
+			TranscriptRequested bool      `json:"transcriptRequested"`
+			Ts                  time.Time `json:"ts"`
+			U                   struct {
+				ID       string `json:"_id"`
+				Username string `json:"username"`
+				Name     string `json:"name"`
+			} `json:"u"`
+			Rid       string        `json:"rid"`
+			ID        string        `json:"_id"`
+			UpdatedAt time.Time     `json:"_updatedAt"`
+			Mentions  []interface{} `json:"mentions"`
+			Channels  []interface{} `json:"channels"`
+		} `json:"lastMessage,omitempty"`
+		VV struct {
+			ID            string    `json:"_id"`
+			Username      string    `json:"username"`
+			Token         string    `json:"token"`
+			Status        string    `json:"status"`
+			LastMessageTs time.Time `json:"lastMessageTs"`
+		} `json:"v,omitempty"`
+		LastMessageee struct {
+			ID    string    `json:"_id"`
+			Rid   string    `json:"rid"`
+			Msg   string    `json:"msg"`
+			Token string    `json:"token"`
+			Alias string    `json:"alias"`
+			Ts    time.Time `json:"ts"`
+			U     struct {
+				ID       string `json:"_id"`
+				Username string `json:"username"`
+				Name     string `json:"name"`
+			} `json:"u"`
+			UpdatedAt time.Time     `json:"_updatedAt"`
+			Mentions  []interface{} `json:"mentions"`
+			Channels  []interface{} `json:"channels"`
+		} `json:"lastMessage,omitempty"`
+		Metricsss struct {
+			V struct {
+				Lq time.Time `json:"lq"`
+			} `json:"v"`
+		} `json:"metrics,omitempty"`
+	} `json:"history"`
 }
 
 type LiveChatVisitorSearchResponse struct {
@@ -524,41 +714,44 @@ func (c *Client) LivechatCustom_Field(params url.Values) (*LiveChatCustom_FieldR
 	return response, nil
 }
 
-func (c *Client) LivechatDepartment() (*LiveChatDepartmentResponse, error) {
-	response := new(LiveChatDepartmentResponse)
+func (c *Client) LivechatDepartment() (*LiveChatDepartmentsResponse, error) {
+	response := new(LiveChatDepartmentsResponse)
 	if err := c.Get("livechat/department", nil, response); err != nil {
 		return nil, err
 	}
 	return response, nil
 }
 
-func (c *Client) LivechatRegisterDepartment(req *LiveChatDepartmentRequest) (*LiveChatDepartmentsResponse, error) {
+//
+func (c *Client) LivechatRegisterDepartment(req *LiveChatResgisterDepartmentRequest) (*LiveChatRegisterDepartmentResponse, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
 
-	response := new(LiveChatDepartmentsResponse)
+	response := new(LiveChatRegisterDepartmentResponse)
 	err = c.Post("livechat/department", bytes.NewBuffer(body), response)
 	return response, err
 }
 
-func (c *Client) LivechatQueryDepartmentGet(params url.Values) (*LiveChatDepartmentsResponse, error) {
+//Get info about a department
+func (c *Client) LivechatQueryDepartmentGet(params url.Values) (*LiveChatQueryDepartmentResponse, error) {
 	api := "livechat/department" + "/" + params["_id"][0]
-	response := new(LiveChatDepartmentsResponse)
+	response := new(LiveChatQueryDepartmentResponse)
 	if err := c.Get(api, nil, response); err != nil {
 		return nil, err
 	}
 	return response, nil
 }
 
-func (c *Client) LivechatUpdateDepartment(req *LiveChatDepartmentRequest) (*LiveChatDepartmentsResponse, error) {
+//
+func (c *Client) LivechatUpdateDepartment(params url.Values, req *LiveChatUpdateDepartmentRequest) (*LiveChatUpdateDepartmentResponse, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
-	api := "livechat/department" + "/" + req.Department.ID
-	response := new(LiveChatDepartmentsResponse)
+	api := "livechat/department" + "/" + params["_id"][0]
+	response := new(LiveChatUpdateDepartmentResponse)
 	err = c.Put(api, bytes.NewBuffer(body), response)
 	return response, err
 }
@@ -618,21 +811,25 @@ func (c *Client) LivechatMessage(req *LiveChatMessageRequest) (*LiveChatMessageR
 	return response, err
 }
 
-func (c *Client) LivechatUpdateMessage(req *LiveChatUpdateMessageRequest) (*LiveChatUpdateMessageResponse, error) {
+func (c *Client) LivechatUpdateMessage(params url.Values, req *LiveChatUpdateMessageRequest) (*LiveChatUpdateMessageResponse, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
-	api := "livechat/message/" + req.ID
+	api := "livechat/message/" + params["_id"][0]
 	response := new(LiveChatUpdateMessageResponse)
 	err = c.Put(api, bytes.NewBuffer(body), response)
 	return response, err
 }
 
-func (c *Client) LivechatRemoveMessage(params url.Values) (*LiveChatDeleteMessageResponse, error) {
+func (c *Client) LivechatRemoveMessage(params url.Values, req *LiveChatDeleteMessageRequest) (*LiveChatDeleteMessageResponse, error) {
+	body, err := json.Marshal(req)
+	if err != nil {
+		return nil, err
+	}
 	response := new(LiveChatDeleteMessageResponse)
 	api := "livechat/message/" + params["_id"][0]
-	if err := c.Delete(api, nil, response); err != nil {
+	if err := c.Delete(api, bytes.NewBuffer(body), response); err != nil {
 		return nil, err
 	}
 	return response, nil
@@ -772,13 +969,14 @@ func (c *Client) LivechatGetUsers(params url.Values) (*LiveChatGetUsersResponse,
 	return response, nil
 }
 
-func (c *Client) LivechatRegisterUser(req *LiveChatRegisterUserRequset) (*LiveChatRegisterUserResponse, error) {
+func (c *Client) LivechatRegisterUser(params url.Values, req *LiveChatRegisterUserRequset) (*LiveChatRegisterUserResponse, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
 	}
+
 	response := new(LiveChatRegisterUserResponse)
-	api := "livechat/users/" + req.Type
+	api := "livechat/users/" + params["type"][0]
 	err = c.Post(api, bytes.NewBuffer(body), response)
 	return response, err
 }
@@ -858,7 +1056,8 @@ func (c *Client) LivechatVisitorPageHistory(params url.Values) (*LiveChatVisitor
 
 func (c *Client) LivechatVisitorChatHistory(params url.Values) (*LiveChatVisitorChatHistoryResponse, error) {
 	response := new(LiveChatVisitorChatHistoryResponse)
-	if err := c.Get("livechat/visitors.chatHistory/room/room-id/visitor/visitor-id", params, response); err != nil {
+	api := "livechat/visitors.chatHistory/room/" + params["roomId"][0] + "/visitor/" + params["visitorId"][0]
+	if err := c.Get(api, params, response); err != nil {
 		return nil, err
 	}
 	return response, nil
