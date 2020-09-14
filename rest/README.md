@@ -52,7 +52,7 @@ Link
 /api/v1/chat.react
 Sets/unsets the user's reaction to an existing chat message.
 Link
-/api/v1/chat.reportMessage  (作用不明 未测试)
+/api/v1/chat.reportMessage  (举报消息)
 Reports a message.
 Link
 /api/v1/chat.search
@@ -83,7 +83,138 @@ Link
 Updates the text of the chat message.
 Link
 ```
-
+# LiveChat.*
+```js
+/api/v1/livechat/users/:type
+Get a list of agents or managers.
+Link
+/api/v1/livechat/users/:type
+Create a new Livechat agent or manager.
+Link
+/api/v1/livechat/users/:type/:_id
+Retrieve agent or manager data.
+Link
+/api/v1/livechat/users/:type/:_id
+Removes a Livechat agent or manager.
+Link
+/api/v1/livechat/department
+Get a list of Livechat departments.
+Link
+/api/v1/livechat/department
+Creates a new Livechat department.
+Link
+/api/v1/livechat/department/:_id
+Retrieve a Livechat department data.
+Link
+/api/v1/livechat/department/:_id
+Updates a Livechat department data.
+Link
+/api/v1/livechat/department/:_id
+Delete a Livechat department.
+Link
+/api/v1/livechat/inquiries.list
+Retrieves a list of open inquiries.
+Link
+/api/v1/livechat/inquiries.take (未完全测试，不太理解)
+Take an open inquiry.
+Link
+/api/v1/livechat/inquiries.getOne
+Get one inquiry by room id.
+Link
+/api/v1/livechat/integrations.settings
+Retrieves a list of integration settings.
+Link
+/api/v1/livechat/agent.info/:rid/:token
+Retrieve the current Livechat agent data.
+Link
+/api/v1/livechat/agent.next/:token (测试通过，但不太理解)
+~/Projects/test/Rocket.Chat.Go.SDK
+Link
+/api/v1/livechat/agents/:agentId/departments
+Get the agent departments.
+Link
+/api/v1/livechat/config/:token
+Get basic Livechat widget configuration info and additional visitor data.
+Link
+/api/v1/livechat/custom.field
+Send a Livechat custom field.
+Link
+/api/v1/livechat/custom.fields
+Send an array of Livechat custom fields.
+Link
+/api/v1/livechat/custom-fields
+Get a list of Livechat custom fields.
+Link
+/api/v1/livechat/custom-fields/:_id
+Get a Livechat custom field.
+Link
+/api/v1/livechat/message
+end a new Livechat message.
+Link
+/api/v1/livechat/message/:_id
+Updates a Livechat message data.
+Link
+/api/v1/livechat/message/:_id
+Delete a Livechat message.
+Link
+/api/v1/livechat/messages.history/:rid
+Load Livechat messages history.
+Link
+/api/v1/livechat/office-hours
+Get a list of office hours.
+Link
+/api/v1/livechat/offline.message (测试通过，但没理解机制)
+Send a new Livechat offline message.
+Link
+/api/v1/livechat/rooms
+Retrieves a list of livechat rooms.
+Link
+/api/v1/livechat/queue
+Retrieves a list of queued chats.
+Link
+/api/v1/livechat/room
+Get the Livechat room data or open a new room.
+Link
+/api/v1/livechat/room.close
+Close a Livechat room.
+Link
+/api/v1/livechat/room.transfer
+Transfer a Livechat room to another agent or department.
+Link
+/api/v1/livechat/room.forward
+Allow Livechat Agents to forward a Livechat room to another agent, department or return it back to the Queue.
+Link
+/api/v1/livechat/room.survey
+Send a Livechat survey to Rocket.Chat.
+Link
+/api/v1/livechat/transcript
+Request a Livechat transcript.
+Link
+/api/v1/livechat/triggers
+Get the Livechat triggers.
+Link
+/api/v1/livechat/triggers/:_id
+Get a Livechat trigger.
+Link
+/api/v1/livechat/visitor
+Register a new Livechat visitor.
+Link
+/api/v1/livechat/visitor/:token
+Retrieve a visitor data.
+Link
+/api/v1/livechat/visitors.info
+Retrieve a visitor info.
+Link
+/api/v1/livechat/page.visited
+Send visitor navigation history to Rocket.Chat.
+Link
+/api/v1/livechat/appearance
+Get the settings about Livechat Widget Appearance.
+Link
+/api/v1/livechat/visitors.chatHistory/room/room-id/visitor/visitor-id
+Gets the visitor chat history.
+Link
+```
 # Channel.*
 
 ```js
