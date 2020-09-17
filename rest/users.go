@@ -78,7 +78,6 @@ type RegisterUserResponse struct {
 		UtcOffset int    `json:"utcOffset"`
 		Username  string `json:"username"`
 	} `json:"user"`
-	Success bool `json:"success"`
 }
 
 type UsersListResponse struct {
