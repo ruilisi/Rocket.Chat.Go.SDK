@@ -65,7 +65,7 @@ func (c *Client) AuthLogin(req AuthLoginRequest) (*AuthLoginResponse, error) {
 
 	response := new(AuthLoginResponse)
 	c.PostForm("login", data, response)
-	c.auth = &authInfo{id: response.Data.UserID, token: response.Data.AuthToken}
+	c.Auth = &AuthInfo{ID: response.Data.UserID, Token: response.Data.AuthToken}
 	return response, nil
 }
 

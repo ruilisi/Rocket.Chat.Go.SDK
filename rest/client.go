@@ -35,7 +35,7 @@ type Client struct {
 	// Use this switch to see all network communication.
 	Debug bool
 
-	auth *authInfo
+	Auth *AuthInfo
 }
 
 type Status struct {
@@ -46,9 +46,9 @@ type Status struct {
 	Message string `json:"message"`
 }
 
-type authInfo struct {
-	token string
-	id    string
+type AuthInfo struct {
+	Token string
+	ID    string
 }
 
 func (s Status) OK() error {
@@ -178,9 +178,9 @@ func (c *Client) PostFormData(method, api string, params map[string]io.Reader, r
 		return err
 	}
 	request.Header.Set("Content-Type", w.FormDataContentType())
-	if c.auth != nil {
-		request.Header.Set("X-Auth-Token", c.auth.token)
-		request.Header.Set("X-User-Id", c.auth.id)
+	if c.Auth != nil {
+		request.Header.Set("X-Auth-Token", c.Auth.Token)
+		request.Header.Set("X-User-Id", c.Auth.ID)
 	}
 
 	resp, err := http.DefaultClient.Do(request)
@@ -214,9 +214,9 @@ func (c *Client) doRequest(method, api string, params url.Values, body io.Reader
 		request.Header.Set("Content-Type", contentType)
 	}
 
-	if c.auth != nil {
-		request.Header.Set("X-Auth-Token", c.auth.token)
-		request.Header.Set("X-User-Id", c.auth.id)
+	if c.Auth != nil {
+		request.Header.Set("X-Auth-Token", c.Auth.Token)
+		request.Header.Set("X-User-Id", c.Auth.ID)
 	}
 
 	if c.Debug {
@@ -272,9 +272,9 @@ func (c *Client) ndoRequest(method, api string, params url.Values, body io.Reade
 		request.Header.Set("Content-Type", contentType)
 	}
 
-	if c.auth != nil {
-		request.Header.Set("X-Auth-Token", c.auth.token)
-		request.Header.Set("X-User-Id", c.auth.id)
+	if c.Auth != nil {
+		request.Header.Set("X-Auth-Token", c.Auth.Token)
+		request.Header.Set("X-User-Id", c.Auth.ID)
 	}
 
 	if c.Debug {

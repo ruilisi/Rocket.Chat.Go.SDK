@@ -383,12 +383,12 @@ func (c *Client) SetActiveStatus(req *models.SetActiveStatus) (*SetActiveStatusR
 //
 // https://rocket.chat/docs/developer-guides/rest-api/authentication/login
 func (c *Client) Login(credentials *models.UserCredentials) (*LogonResponse, error) {
-	if c.auth != nil {
+	if c.Auth != nil {
 		return nil, nil
 	}
 
 	if credentials.ID != "" && credentials.Token != "" {
-		c.auth = &authInfo{id: credentials.ID, token: credentials.Token}
+		c.Auth = &AuthInfo{ID: credentials.ID, Token: credentials.Token}
 		return nil, nil
 	}
 
@@ -405,7 +405,7 @@ func (c *Client) Login(credentials *models.UserCredentials) (*LogonResponse, err
 		return nil, err
 	}
 
-	c.auth = &authInfo{id: response.Data.UserID, token: response.Data.Token}
+	c.Auth = &AuthInfo{ID: response.Data.UserID, Token: response.Data.Token}
 	credentials.ID, credentials.Token = response.Data.UserID, response.Data.Token
 	return response, nil
 }
@@ -429,7 +429,7 @@ func (c *Client) CreateToken(userID, username string) (*models.UserCredentials, 
 // https://rocket.chat/docs/developer-guides/rest-api/authentication/logout
 func (c *Client) Logout() (string, error) {
 
-	if c.auth == nil {
+	if c.Auth == nil {
 		return "Was not logged in", nil
 	}
 
