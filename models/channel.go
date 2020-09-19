@@ -75,9 +75,8 @@ type ChannelRemoveOwnerRequest struct {
 }
 
 type ChannelAddModeratorRequest struct {
-	RoomName string `json:"roomName"`
-	RoomID   string `json:"roomId"`
-	UserID   string `json:"userId"`
+	RoomID string `json:"roomId"`
+	UserID string `json:"userId"`
 }
 
 type ChannelRemoveModeratorRequest struct {
@@ -86,8 +85,9 @@ type ChannelRemoveModeratorRequest struct {
 }
 
 type ChannelInviteRequest struct {
-	RoomID string `json:"roomId"`
-	UserID string `json:"userId"`
+	RoomName string `json:"roomName"`
+	RoomID   string `json:"roomId"`
+	UserID   string `json:"userId"`
 }
 
 type ChannelDescriptionRequest struct {
