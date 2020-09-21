@@ -147,7 +147,6 @@ type ChannelKickResponse struct {
 		SysMes    bool      `json:"sysMes"`
 		UpdatedAt time.Time `json:"_updatedAt"`
 	} `json:"channel"`
-	Success bool `json:"success"`
 }
 
 type ChannelJoinResponse struct {
@@ -260,8 +259,7 @@ type ChannelReadOnlyResponse struct {
 
 type ChannelTopicResponse struct {
 	Status
-	Topic   string `json:"topic"`
-	Success bool   `json:"success"`
+	Topic string `json:"topic"`
 }
 
 type ChannelJoinCodeResponse struct {
