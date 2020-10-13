@@ -420,9 +420,9 @@ func (c *Client) GroupRemoveLeader(req *models.GroupRemoveLeaderRequest) (*Group
 	return response, err
 }
 
-func (c *Client) GroupList(params url.Values) (*models.GroupList, error) {
+func (c *Client) GroupList() (*GroupListResponse, error) {
 	response := new(GroupListResponse)
-	if err := c.Get("groups.list", params, response); err != nil {
+	if err := c.Get("groups.list", "", response); err != nil {
 		return nil, err
 	}
 
