@@ -422,11 +422,11 @@ func (c *Client) GroupRemoveLeader(req *models.GroupRemoveLeaderRequest) (*Group
 
 func (c *Client) GroupList() (*GroupListResponse, error) {
 	response := new(GroupListResponse)
-	if err := c.Get("groups.list", "", response); err != nil {
+	if err := c.Get("groups.list", map[string][]string{}, response); err != nil {
 		return nil, err
 	}
 
-	return &response.GroupList, nil
+	return response, nil
 }
 
 func (c *Client) GroupAddModerator(req *models.GroupAddModeratorRequest) (*GroupAddModeratorResponse, error) {
