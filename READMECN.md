@@ -1,18 +1,17 @@
 # Rocket.Chat Go SDK
-[中文文档](https://github.com/ruilisi/Rocket.Chat.Go.SDK/blob/master/READMECN.md)
-forked from [RocketChat/Rocket.Chat.Go.SDK](https://github.com/RocketChat/Rocket.Chat.Go.SDK)<br>
-this version contains mostly apis that rocket-chat support. 
+从 [RocketChat/Rocket.Chat.Go.SDK](https://github.com/RocketChat/Rocket.Chat.Go.SDK) fork来<br>
+这个版本完成了几乎所有的rocket_chat的接口的sdk化工作
 
-# struct
-models: request struct <br>
-conf: get config from application.yml<br>
-rest: api function and response struct <br>
-test: test 
+# 结构说明
+models: 请求所需的结构  <br>
+conf: 从application.yml获取配置的函数<br>
+rest: sdk和返回结构 <br>
+test: 测试
 
-# how to use 
-## example
-init client<br> 
-host is your rocket_chat server address
+# 如何使用
+## 样例
+初始化client<br>
+host 是rocket_chat服务地址
 ```go
 var Client *rest.Client
 
@@ -40,9 +39,9 @@ func InitRcServer(b bool) {
 }
 ```
 
-This function is used to login rocket_chat and get userid and token.<br>
-Token in rocket_chat valid in 90 days.You can store it in redis.When token used in other apis which needs token,you can take out token directly from redis,it will be quickly.<br>
-Request apis from rocket_chat may timeout,use goroutine can set timeout return.Goroutine can also be used in your api server handlers when it need to use this project sdk. 
+这个函数用来登录rocket_chat获取user_token和user_id<br>
+token在rocket_chat里能有效90天，把token存储在redis里，当请求后续需要token的接口时，可以直接使用保存在redis里的token，这样请求效率比较高，避免重复登录。<br>
+请求rocket_chat的api时，可能会遇见超时情况，使用并发可以设置超时时间，提升体验，如果你在使用此sdk时，同一handler下多次请求rocket_chat时，可以考虑使用并发，能够显著提升效率。
 ```go
 import	"github.com/ruilisi/Rocket.Chat.Go.SDK/rest"
 
@@ -97,8 +96,7 @@ func LoginRc(user, password string) (userid, token string, err error) {
 	return userid, token, nil
 }
 ```
-
-Unlike origin sdk,this project expose client's token and userid.You can set token and userid directly.
+不同于原项目，本项目将client的token和userid暴露了出来，这样就可以随时进行设置。
 ```go
 import (
     immodels "github.com/ruilisi/Rocket.Chat.Go.SDK/models"
@@ -119,11 +117,12 @@ createGroup := immodels.CreateGroupRequest{
 	Name:    fmt.Sprintf("%s_%s", department.Name, user.Username),
 	Members: []string{user.Username, agentName},
 }
-createGroupRes, _ := Client.CreateGroup(&createGroup)	
+createGroupRes, _ := Client.CreateGroup(&createGroup)
 ```
 
-# License
-Code and documentation copyright 2020 the [Rocket.Chat.Go.SDK Authors](https://github.com/ruilisi/Rocket.Chat.Go.SDK/graphs/contributors) and [ruilisi Network](https://ruilisi.co/) Code released under the [MIT License](https://github.com/ruilisi/Rocket.Chat.Go.SDK/blob/master/LICENSE).
+
+# 执照
+  代码和文档版权归2020年[MIT许可](https://github.com/ruilisi/Rocket.Chat.Go.SDK/blob/master/LICENSE)下发布的[Golang-pangu Authors](https://github.com/ruilisi/Rocket.Chat.Go.SDK/graphs/contributors) 和 [Ruilisi Network](https://ruilisi.co/)所拥有。
 <table frame=void>
 <tr>
 <td >
@@ -140,3 +139,4 @@ Code and documentation copyright 2020 the [Rocket.Chat.Go.SDK Authors](https://g
         <td align="center"><a href="https://github.com/chioazhao"><img src="https://avatars2.githubusercontent.com/u/59110803?s=460&u=1ac5a6b9811de1a89c38a6368c96ee3d552f62bf&v=4" width="100px;" alt="chioazhao"/><br /><sub><b>chioazhao</b></sub></a><br /><a href="https://github.com/ruilisi/Rocket.Chat.Go.SDK/commits?author=chioazhao" title="Code">💻</a> <a href="https://github.com/ruilisi/Rocket.Chat.Go.SDK/commits?author=chioazhao" title="Documentation">📖</a></td>
   </tr>
 </table>
+
