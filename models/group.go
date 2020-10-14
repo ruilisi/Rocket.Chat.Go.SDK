@@ -19,18 +19,23 @@ type GroupRemoveLeaderRequest struct {
 
 type GroupList struct {
 	Groups []struct {
-		ID          string            `json:"_id"`
-		Name        string            `json:"name"`
-		Type        string            `json:"t"`
-		Msgs        int               `json:"msgs"`
-		UserOwner   map[string]string `json:"u"`
-		Timestamp   time.Time         `json:"ts"`
-		LastMessage time.Time         `json:"lm"`
-		Usernames   []string          `json:"usernames"`
-		ReadOnly    bool              `json:"ro"`
-		CanLeave    bool              `json:"cl"`
-		SysMes      bool              `json:"sysMes"`
-		UpdateAt    time.Time         `json:"_updatedAt"`
+		ID         string `json:"_id"`
+		Name       string `json:"name"`
+		Fname      string `json:"fname"`
+		T          string `json:"t"`
+		Msgs       int    `json:"msgs"`
+		UsersCount int    `json:"usersCount"`
+		U          struct {
+			ID       string `json:"_id"`
+			Username string `json:"username"`
+		} `json:"u"`
+		CustomFields struct {
+		} `json:"customFields"`
+		Ts        time.Time `json:"ts"`
+		Ro        bool      `json:"ro"`
+		Default   bool      `json:"default"`
+		SysMes    bool      `json:"sysMes"`
+		UpdatedAt time.Time `json:"_updatedAt"`
 	} `json:"groups"`
 }
 
