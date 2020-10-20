@@ -12,12 +12,17 @@ type User struct {
 }
 
 type CreateUserRequest struct {
-	Name         string            `json:"name"`
-	Email        string            `json:"email"`
-	Password     string            `json:"password"`
-	Username     string            `json:"username"`
-	Roles        []string          `json:"roles,omitempty"`
-	CustomFields map[string]string `json:"customFields,omitempty"`
+	Name                  string            `json:"name"`
+	Email                 string            `json:"email"`
+	Password              string            `json:"password"`
+	Username              string            `json:"username"`
+	Roles                 []string          `json:"roles,omitempty"`
+	Active                bool              `json:"active,default:true"`
+	JoinDefaultChannels   bool              `json:"joinDefaultChannels,default:true"`
+	RequirePasswordChange bool              `json:"requirePasswordChange,default:false"`
+	SendWelcomeEmail      bool              `json:"sendWelcomeEmail,default:false"`
+	Verified              bool              `json:"verified,default:false"`
+	CustomFields          map[string]string `json:"customFields,omitempty"`
 }
 
 type RegisterUserRequest struct {
