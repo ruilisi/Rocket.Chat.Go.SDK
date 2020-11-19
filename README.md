@@ -101,7 +101,7 @@ func LoginRc(user, password string) (userid, token string, err error) {
 Unlike origin sdk,this project expose client's token and userid.You can set token and userid directly.
 ```go
 import (
-    immodels "github.com/ruilisi/Rocket.Chat.Go.SDK/models"
+  immodels "github.com/ruilisi/Rocket.Chat.Go.SDK/models"
 	"github.com/ruilisi/Rocket.Chat.Go.SDK/rest"
 )
 
@@ -120,6 +120,15 @@ createGroup := immodels.CreateGroupRequest{
 	Members: []string{user.Username, agentName},
 }
 createGroupRes, _ := Client.CreateGroup(&createGroup)	
+```
+
+set params
+```go
+params := map[string][]string{
+  "count": {"2"},
+  "sort":  {"{\"value\":-1}"},
+}
+res, err := client.GroupList(params)
 ```
 
 # License

@@ -120,6 +120,14 @@ createGroup := immodels.CreateGroupRequest{
 createGroupRes, _ := Client.CreateGroup(&createGroup)
 ```
 
+在某些方法里设置params参数
+```go
+params := map[string][]string{
+  "count": {"2"},
+  "sort":  {"{\"value\":-1}"},
+}
+res, err := client.GroupList(params)
+```
 
 # 执照
   代码和文档版权归2020年[MIT许可](https://github.com/ruilisi/Rocket.Chat.Go.SDK/blob/master/LICENSE)下发布的[Golang-pangu Authors](https://github.com/ruilisi/Rocket.Chat.Go.SDK/graphs/contributors) 和 [Ruilisi Network](https://ruilisi.co/)所拥有。
