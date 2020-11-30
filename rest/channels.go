@@ -452,9 +452,9 @@ type OnlineChannelResponse struct {
 // GetPublicChannels returns all channels that can be seen by the logged in user.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list
-func (c *Client) GetPublicChannels() (*ChannelsResponse, error) {
+func (c *Client) ChannelsList(params url.Values) (*ChannelsResponse, error) {
 	response := new(ChannelsResponse)
-	if err := c.Get("channels.list", nil, response); err != nil {
+	if err := c.Get("channels.list", params, response); err != nil {
 		return nil, err
 	}
 
