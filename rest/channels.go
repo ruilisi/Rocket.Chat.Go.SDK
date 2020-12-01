@@ -94,6 +94,23 @@ type ChannelOpenResponse struct {
 	Status
 }
 
+type ChannelHistoryResponse struct {
+	Status
+	Messages []struct {
+		ID  string    `json:"_id"`
+		Rid string    `json:"rid"`
+		Msg string    `json:"msg"`
+		Ts  time.Time `json:"ts"`
+		U   struct {
+			ID       string `json:"_id"`
+			Username string `json:"username"`
+		} `json:"u"`
+		UpdatedAt time.Time `json:"_updatedAt"`
+		T         string    `json:"t,omitempty"`
+		Groupable bool      `json:"groupable,omitempty"`
+	} `json:"messages"`
+}
+
 type ChannelDefaultResponse struct {
 	Status
 	Channel struct {
@@ -833,6 +850,15 @@ func (c *Client) ChannelAnonymousread(params url.Values) (*ChannelAnonymousreadR
 
 	response := new(ChannelAnonymousreadResponse)
 	if err := c.Get("channels.anonymousread", params, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (c *Client) ChannelHistory(params url.Values) (*ChannelHistoryResponse, error) {
+	response := new(ChannelHistoryResponse)
+	if err := c.Get("channels.history", params, response); err != nil {
 		return nil, err
 	}
 
