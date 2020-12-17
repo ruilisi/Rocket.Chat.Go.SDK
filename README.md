@@ -1,5 +1,5 @@
 # Rocket.Chat Go SDK
-[中文文档](https://github.com/ruilisi/Rocket.Chat.Go.SDK/blob/master/READMECN.md)
+[中文文档](https://github.com/ruilisi/Rocket.Chat.Go.SDK/blob/master/READMECN.md)<br>
 forked from [RocketChat/Rocket.Chat.Go.SDK](https://github.com/RocketChat/Rocket.Chat.Go.SDK)<br>
 this version contains mostly apis that rocket-chat support. 
 
